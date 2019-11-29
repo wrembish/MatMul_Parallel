@@ -1,19 +1,24 @@
+// https://github.com/wrembish/MatMul_Parallel.git
 #include <iostream>
 #include <omp.h>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
 // constant variables for the desired size of matrix 1
-const size_t MAT1_X = 2;
-const size_t MAT1_Y = 4;
+const size_t MAT1_X = 835;
+const size_t MAT1_Y = 835;
 
 // constant variables for the desired size of matrix 2
-const size_t MAT2_X = 4;
-const size_t MAT2_Y = 2;
+const size_t MAT2_X = 835;
+const size_t MAT2_Y = 835;
 
 int main() 
 {
+	// take start time of whole program
+	auto prog_start = high_resolution_clock::now();
 	// seed rand for randomly filling the matrices
 	srand(time(NULL));
 	
@@ -25,6 +30,7 @@ int main()
 	int result_mat[MAT1_X][MAT2_Y];
 	
 	// zero result matrix
+	#pragma omp simd
 	for(int i = 0; i < MAT1_X; i++)
 	{
 		for(int j = 0; j < MAT2_Y; j++)
@@ -34,26 +40,33 @@ int main()
 	}
 	
 	// fill in mat1 with random positive integers <= 100
+	#pragma omp simd
 	for(int i = 0; i < MAT1_X; i++)
 	{
 		for(int j = 0; j < MAT1_Y; j++)
 		{
-			mat1[i][j] = (rand() % 10) + 1;
+			mat1[i][j] = (rand() % 100) + 1;
 		}
 	}
 	
 	// fill in mat2 with random positive integers <= 100
+	#pragma omp simd
 	for(int i = 0; i < MAT2_X; i++)
 	{
 		for(int j = 0; j < MAT2_Y; j++)
 		{
-			mat2[i][j] = (rand() % 10) + 1;
+			mat2[i][j] = (rand() % 100) + 1;
 		}
 	}
+	
+	
+	// get the start time of the execution of the matrix multiplication
+	auto start = high_resolution_clock::now();
 	
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
+		#pragma omp parallel for ordered schedule(static)
 		for(int i = 0; i < MAT1_X; i++)
 		{
 			for(int j = 0; j < MAT2_Y; j++)
@@ -70,8 +83,22 @@ int main()
 		cout << "the dimensions of the two matrices don't allow multiplication" << endl;
 	}
 	
+	// get the end time of the execution of the matrix multiplication
+	auto stop = high_resolution_clock::now();
 	
-	// print the matrices for testing purposes
+	// get the difference in time between start and finish
+	auto duration = duration_cast<microseconds>(stop - start);
+	
+	cout << "time taken: " << duration.count() << " microseconds." << endl;
+	
+	// take end time of whole program
+	auto prog_stop = high_resolution_clock::now();
+	
+	// get the difference in time between program start and finish
+	auto prog_duration = duration_cast<microseconds>(prog_stop - prog_start);
+	cout << "time taken(program): " << prog_duration.count() << " microseconds." << endl;
+	
+	/** print the matrices for testing purposes
 	for(int i = 0; i < MAT1_X; i++)
 	{
 		for(int j = 0; j < MAT1_Y; j++)
@@ -102,4 +129,5 @@ int main()
 		}
 		cout << endl;
 	}
+	**/
 }
