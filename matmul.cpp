@@ -59,20 +59,17 @@ int main()
 		}
 	}
 	
-	
-	// get the start time of the execution of the matrix multiplication
-	auto start = high_resolution_clock::now();
-	
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
-		#pragma omp parallel for ordered schedule(static)
+		#pragma omp parallel for ordered schedule(auto)
 		for(int i = 0; i < MAT1_X; i++)
 		{
 			for(int j = 0; j < MAT2_Y; j++)
 			{
 				for(int k = 0; k < MAT1_Y; k++)
 				{
+					#pragma omp atomic write
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
 				}
 			}
@@ -82,14 +79,6 @@ int main()
 	{
 		cout << "the dimensions of the two matrices don't allow multiplication" << endl;
 	}
-	
-	// get the end time of the execution of the matrix multiplication
-	auto stop = high_resolution_clock::now();
-	
-	// get the difference in time between start and finish
-	auto duration = duration_cast<microseconds>(stop - start);
-	
-	cout << "time taken: " << duration.count() << " microseconds." << endl;
 	
 	// take end time of whole program
 	auto prog_stop = high_resolution_clock::now();
