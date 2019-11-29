@@ -30,7 +30,7 @@ int main()
 	int result_mat[MAT1_X][MAT2_Y];
 	
 	// zero result matrix
-	#pragma omp simd
+	#pragma omp simd collapse(2)
 	for(int i = 0; i < MAT1_X; i++)
 	{
 		for(int j = 0; j < MAT2_Y; j++)
@@ -40,7 +40,7 @@ int main()
 	}
 	
 	// fill in mat1 with random positive integers <= 100
-	#pragma omp simd
+	#pragma omp simd collapse(2)
 	for(int i = 0; i < MAT1_X; i++)
 	{
 		for(int j = 0; j < MAT1_Y; j++)
@@ -50,7 +50,7 @@ int main()
 	}
 	
 	// fill in mat2 with random positive integers <= 100
-	#pragma omp simd
+	#pragma omp for simd collapse(2)
 	for(int i = 0; i < MAT2_X; i++)
 	{
 		for(int j = 0; j < MAT2_Y; j++)
@@ -62,14 +62,14 @@ int main()
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
-		#pragma omp parallel for ordered schedule(auto)
+		#pragma omp parallel for ordered schedule(auto) collapse(3)
+		//#pragma omp target teams distribute parallel for schedule(auto) map(result_mat[0:MAT1_Y-1])
 		for(int i = 0; i < MAT1_X; i++)
 		{
 			for(int j = 0; j < MAT2_Y; j++)
 			{
 				for(int k = 0; k < MAT1_Y; k++)
 				{
-					#pragma omp atomic write
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
 				}
 			}
