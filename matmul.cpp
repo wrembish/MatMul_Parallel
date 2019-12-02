@@ -31,9 +31,9 @@ int main()
 	
 	// zero result matrix
 	#pragma omp simd collapse(2)
-	for(int signed i = 0; i < MAT1_X; i++)
+	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int signed j = 0; j < MAT2_Y; j++)
+		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
 			result_mat[i][j] = 0;
 		}
@@ -41,9 +41,9 @@ int main()
 	
 	// fill in mat1 with random positive integers <= 100
 	#pragma omp simd collapse(2)
-	for(int signed i = 0; i < MAT1_X; i++)
+	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int signed j = 0; j < MAT1_Y; j++)
+		for(int unsigned j = 0; j < MAT1_Y; j++)
 		{
 			mat1[i][j] = (rand() % 100) + 1;
 		}
@@ -51,9 +51,9 @@ int main()
 	
 	// fill in mat2 with random positive integers <= 100
 	#pragma omp for simd collapse(2)
-	for(int signed i = 0; i < MAT2_X; i++)
+	for(int unsigned i = 0; i < MAT2_X; i++)
 	{
-		for(int signed j = 0; j < MAT2_Y; j++)
+		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
 			mat2[i][j] = (rand() % 100) + 1;
 		}
@@ -64,11 +64,11 @@ int main()
 	{
 		#pragma omp parallel for ordered schedule(auto) collapse(3)
 		//#pragma omp target teams distribute parallel for schedule(auto) map(result_mat[0:MAT1_Y-1])
-		for(int signed i = 0; i < MAT1_X; i++)
+		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			for(int signed j = 0; j < MAT2_Y; j++)
+			for(int unsigned j = 0; j < MAT2_Y; j++)
 			{
-				for(int signed k = 0; k < MAT1_Y; k++)
+				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
 				}
@@ -88,9 +88,9 @@ int main()
 	cout << "time taken(program): " << prog_duration.count() << " microseconds." << endl;
 	
 	/** print the matrices for testing purposes
-	for(int signed i = 0; i < MAT1_X; i++)
+	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int signed j = 0; j < MAT1_Y; j++)
+		for(int unsigned j = 0; j < MAT1_Y; j++)
 		{
 			cout << mat1[i][j] << " ";
 		}
@@ -99,9 +99,9 @@ int main()
 	
 	cout << endl;
 	
-	for(int signed i = 0; i < MAT2_X; i++)
+	for(int unsigned i = 0; i < MAT2_X; i++)
 	{
-		for(int signed j = 0; j < MAT2_Y; j++)
+		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
 			cout << mat2[i][j] << " ";
 		}
@@ -110,9 +110,9 @@ int main()
 	
 	cout << endl;
 	
-	for(int signed i = 0; i < MAT1_X; i++)
+	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int signed j = 0; j < MAT2_Y; j++)
+		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
 			cout << result_mat[i][j] << " ";
 		}
