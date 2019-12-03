@@ -59,6 +59,7 @@ int main()
 		}
 	}
 	
+	cout << "starting multiplication" << endl;
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
