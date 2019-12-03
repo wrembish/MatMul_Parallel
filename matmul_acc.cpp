@@ -46,9 +46,10 @@ int main()
 		for(int unsigned j = 0; j < MAT1_Y; j++)
 		{
 			mat1[i][j] = (rand() % 100) + 1;
+			mat2[i][j] = (rand() % 100) + 1;
 		}
 	}
-	
+	/**
 	// fill in mat2 with random positive integers <= 100
 	#pragma acc loop	
 	for(int unsigned i = 0; i < MAT2_X; i++)
@@ -58,6 +59,7 @@ int main()
 			mat2[i][j] = (rand() % 100) + 1;
 		}
 	}
+	**/
 	
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
