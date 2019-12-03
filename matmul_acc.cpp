@@ -28,7 +28,6 @@ int main()
 	
 	// define the result matrix
 	int result_mat[MAT1_X][MAT2_Y];
-	int result_mat_new[MAT1_X][MAT2_Y];
 	
 	// zero result matrix
 	#pragma acc loop
@@ -69,9 +68,10 @@ int main()
 		#pragma kernals loop gang, vector(8)
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			
+			#pragma acc loop gang, vector(8)
 			for(int unsigned j = 0; j < MAT2_Y; j++)
 			{
+				#pragma acc loop gang, vector(8)
 				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
