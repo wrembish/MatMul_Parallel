@@ -62,8 +62,8 @@ int main()
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
-		#pragma acc loop
 		#pragma omp parallel for ordered schedule(auto) collapse(3)
+		#pragma acc kernals
 		//#pragma omp target teams distribute parallel for schedule(auto) map(result_mat[0:MAT1_Y-1])
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
