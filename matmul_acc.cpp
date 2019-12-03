@@ -32,30 +32,37 @@ int main()
 	
 	// zero result matrix
 	#pragma acc loop
-	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int unsigned j = 0; j < MAT2_Y; j++)
+		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			result_mat[i][j] = 0;
+			for(int unsigned j = 0; j < MAT2_Y; j++)
+			{
+				result_mat[i][j] = 0;
+			}
 		}
 	}
+	
 	// fill in mat1 with random positive integers <= 100
 	#pragma acc loop
-	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int unsigned j = 0; j < MAT1_Y; j++)
+		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			mat1[i][j] = (rand() % 100) + 1;
+			for(int unsigned j = 0; j < MAT1_Y; j++)
+			{
+				mat1[i][j] = (rand() % 100) + 1;
+			}
 		}
 	}
 	
 	// fill in mat2 with random positive integers <= 100
 	#pragma acc loop
-	for(int unsigned i = 0; i < MAT2_X; i++)
 	{
-		for(int unsigned j = 0; j < MAT2_Y; j++)
+		for(int unsigned i = 0; i < MAT2_X; i++)
 		{
-			mat2[i][j] = (rand() % 100) + 1;
+			for(int unsigned j = 0; j < MAT2_Y; j++)
+			{
+				mat2[i][j] = (rand() % 100) + 1;
+			}
 		}
 	}
 	
@@ -65,14 +72,15 @@ int main()
 		#pragma omp parallel for ordered schedule(auto) collapse(3)
 		#pragma acc data copyin(result_mat,result_mat_new)
 		#pragma acc kernels
-		//#pragma omp target teams distribute parallel for schedule(auto) map(result_mat[0:MAT1_Y-1])
-		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			for(int unsigned j = 0; j < MAT2_Y; j++)
+			for(int unsigned i = 0; i < MAT1_X; i++)
 			{
-				for(int unsigned k = 0; k < MAT1_Y; k++)
+				for(int unsigned j = 0; j < MAT2_Y; j++)
 				{
-					result_mat_new[i][j] += mat1[i][k] * mat2[k][j];
+					for(int unsigned k = 0; k < MAT1_Y; k++)
+					{
+						result_mat_new[i][j] += mat1[i][k] * mat2[k][j];
+					}
 				}
 			}
 		}
