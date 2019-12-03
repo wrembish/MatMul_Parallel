@@ -50,7 +50,7 @@ int main()
 	}
 	
 	// fill in mat2 with random positive integers <= 100
-	#pragma acc parallel	
+	#pragma acc loop	
 	for(int unsigned i = 0; i < MAT2_X; i++)
 	{
 		for(int unsigned j = 0; j < MAT2_Y; j++)
