@@ -72,7 +72,7 @@ int main()
 			{
 				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
-					result_mat[i][j] += mat1[i][k] * mat2[k][j];
+					result_mat_new[i][j] += mat1[i][k] * mat2[k][j];
 				}
 			}
 		}
