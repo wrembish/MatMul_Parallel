@@ -68,14 +68,12 @@ int main()
 		#pragma kernals loop gang, vector(8)
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			#pragma acc loop
+			//#pragma acc loop
 			for(int unsigned j = 0; j < MAT2_Y; j++)
 			{
-				#pragma acc loop seq
+				//#pragma acc loop seq
 				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
-					
-					cout << "enter loop" << endl;
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
 				}
 			}
