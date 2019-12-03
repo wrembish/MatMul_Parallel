@@ -65,7 +65,7 @@ int main()
 		//#pragma omp parallel for ordered schedule(auto) collapse(3)
 		#pragma acc data copyout(result_mat[0:MAT1_X][0:MAT2_Y]), copyin(mat1[0:MAT1_X][MAT1_Y],mat2[0:MAT2_X][MAT2_Y])
 		{
-		#pragma kernals loop gang, vector(8)
+		#pragma kernals
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
 			//#pragma acc loop
