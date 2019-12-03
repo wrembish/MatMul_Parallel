@@ -37,14 +37,14 @@ int main()
 	int result_mat[MAT_SIZE*MAT_SIZE];
 	
 	// zero result matrix
-	#pragma omp simd
+	#pragma acc loop
 	for(int unsigned i = 0; i < MAT_SIZE*MAT_SIZE; i++)
 	{
 		result_mat[i] = 0;
 	}
 	
 	// fill in mat1 with random positive integers <= 100
-	#pragma omp simd
+	#pragma acc loop
 	for(int unsigned i = 0; i < MAT_SIZE; i++)
 	{
 		int x_loc = i * MAT_SIZE;
@@ -55,7 +55,7 @@ int main()
 	}
 	
 	// fill in mat2 with random positive integers <= 100
-	#pragma omp for simd
+	#pragma acc loop
 	for(int unsigned i = 0; i < MAT_SIZE; i++)
 	{
 		int x_loc = i * MAT_SIZE;
