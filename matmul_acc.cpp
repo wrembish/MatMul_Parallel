@@ -23,11 +23,11 @@ int main()
 	srand(time(NULL));
 	
 	// define the matrices to the variables mat1 and mat2
-	int mat1[MAT1_X][MAT1_Y];
-	int mat2[MAT2_X][MAT2_Y];
+	int restrict mat1[MAT1_X][MAT1_Y];
+	int restrict mat2[MAT2_X][MAT2_Y];
 	
 	// define the result matrix
-	int result_mat[MAT1_X][MAT2_Y];
+	int restrict result_mat[MAT1_X][MAT2_Y];
 	
 	// zero result matrix
 	#pragma acc loop
