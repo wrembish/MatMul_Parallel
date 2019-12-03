@@ -37,10 +37,11 @@ int main()
 		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
 			result_mat[i][j] = 0;
+			cout << "success" << endl;
 			result_mat_new[i][j] = 0;
+			cout << "success" << endl;
 		}
 	}
-	cout << "success" << endl;
 	// fill in mat1 with random positive integers <= 100
 	#pragma acc loop
 	for(int unsigned i = 0; i < MAT1_X; i++)
