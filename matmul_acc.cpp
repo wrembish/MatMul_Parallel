@@ -30,7 +30,7 @@ int main()
 	int result_mat[MAT1_X][MAT2_Y];
 	
 	// zero result matrix
-	#pragma omp simd collapse(2)
+	#pragma acc loop
 	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
 		for(int unsigned j = 0; j < MAT2_Y; j++)
@@ -40,7 +40,7 @@ int main()
 	}
 	
 	// fill in mat1 with random positive integers <= 100
-	#pragma omp simd collapse(2)
+	#pragma acc loop
 	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
 		for(int unsigned j = 0; j < MAT1_Y; j++)
@@ -50,7 +50,7 @@ int main()
 	}
 	
 	// fill in mat2 with random positive integers <= 100
-	#pragma omp for simd collapse(2)
+	#pragma acc loop
 	for(int unsigned i = 0; i < MAT2_X; i++)
 	{
 		for(int unsigned j = 0; j < MAT2_Y; j++)
