@@ -78,6 +78,7 @@ int main()
 				}
 			}
 		}
+		}
 		
 	} else
 	{
