@@ -74,6 +74,8 @@ int main()
 				#pragma acc loop seq
 				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
+					
+					cout << "enter loop" << endl;
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
 				}
 			}
