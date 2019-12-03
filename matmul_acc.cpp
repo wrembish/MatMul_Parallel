@@ -28,7 +28,7 @@ int main()
 	
 	// define the result matrix
 	int result_mat[MAT1_X][MAT2_Y];
-	int result_mat_new[Mat1_x][MAT2_Y];
+	int result_mat_new[Mat1_X][MAT2_Y];
 	
 	// zero result matrix
 	#pragma acc loop
