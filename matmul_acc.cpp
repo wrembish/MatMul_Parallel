@@ -68,17 +68,15 @@ int main()
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
-		//#pragma omp parallel for shared(result_mat) ordered schedule(auto) collapse(3)
-		#pragma acc kernels
+		#pragma omp parallel for shared(result_mat) ordered schedule(auto) collapse(3)
+		//#pragma acc kernels
+		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			for(int unsigned i = 0; i < MAT1_X; i++)
+			for(int unsigned j = 0; j < MAT2_Y; j++)
 			{
-				for(int unsigned j = 0; j < MAT2_Y; j++)
+				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
-					for(int unsigned k = 0; k < MAT1_Y; k++)
-					{
-						result_mat[i][j] += mat1[i][k] * mat2[k][j];
-					}
+					result_mat[i][j] += mat1[i][k] * mat2[k][j];
 				}
 			}
 		}
