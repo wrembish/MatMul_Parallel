@@ -64,7 +64,7 @@ int main()
 	if(MAT1_Y == MAT2_X)
 	{
 		//#pragma omp parallel for ordered schedule(auto) collapse(3)
-		#pragma acc data copyin(result_mat[MAT1_X][MAT2_Y], result_mat_new[MAT1_X][MAT2_Y])
+		#pragma acc data copyin(result_mat[0:MAT1_X*MAT2_Y], result_mat_new[0:MAT1_X*MAT2_Y])
 		#pragma kernals
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
