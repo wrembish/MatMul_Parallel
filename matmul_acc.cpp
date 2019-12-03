@@ -31,45 +31,39 @@ int main()
 	
 	// zero result matrix
 	#pragma acc loop
+	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int unsigned i = 0; i < MAT1_X; i++)
+		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
-			for(int unsigned j = 0; j < MAT2_Y; j++)
-			{
-				result_mat[i][j] = 0;
-			}
+			result_mat[i][j] = 0;
 		}
 	}
 	
 	// fill in mat1 with random positive integers <= 100
 	#pragma acc loop
+	for(int unsigned i = 0; i < MAT1_X; i++)
 	{
-		for(int unsigned i = 0; i < MAT1_X; i++)
+		for(int unsigned j = 0; j < MAT1_Y; j++)
 		{
-			for(int unsigned j = 0; j < MAT1_Y; j++)
-			{
-				mat1[i][j] = (rand() % 100) + 1;
-			}
+			mat1[i][j] = (rand() % 100) + 1;
 		}
 	}
 	
 	// fill in mat2 with random positive integers <= 100
-	#pragma acc loop
+	#pragma acc loop	
+	for(int unsigned i = 0; i < MAT2_X; i++)
 	{
-		for(int unsigned i = 0; i < MAT2_X; i++)
+		for(int unsigned j = 0; j < MAT2_Y; j++)
 		{
-			for(int unsigned j = 0; j < MAT2_Y; j++)
-			{
-				mat2[i][j] = (rand() % 100) + 1;
-			}
+			mat2[i][j] = (rand() % 100) + 1;
 		}
 	}
 	
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
-		#pragma omp parallel for shared(result_mat) ordered schedule(auto) collapse(3)
-		//#pragma acc kernels
+		#pragma omp parallel for ordered schedule(auto) collapse(3)
+		//#pragma omp target teams distribute parallel for schedule(auto) map(result_mat[0:MAT1_Y-1])
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
 			for(int unsigned j = 0; j < MAT2_Y; j++)
@@ -92,37 +86,4 @@ int main()
 	// get the difference in time between program start and finish
 	auto prog_duration = duration_cast<microseconds>(prog_stop - prog_start);
 	cout << "time taken(program): " << prog_duration.count() << " microseconds." << endl;
-	
-	/** print the matrices for testing purposes
-	for(int unsigned i = 0; i < MAT1_X; i++)
-	{
-		for(int unsigned j = 0; j < MAT1_Y; j++)
-		{
-			cout << mat1[i][j] << " ";
-		}
-		cout << endl;
-	}
-	
-	cout << endl;
-	
-	for(int unsigned i = 0; i < MAT2_X; i++)
-	{
-		for(int unsigned j = 0; j < MAT2_Y; j++)
-		{
-			cout << mat2[i][j] << " ";
-		}
-		cout << endl;
-	}
-	
-	cout << endl;
-	
-	for(int unsigned i = 0; i < MAT1_X; i++)
-	{
-		for(int unsigned j = 0; j < MAT2_Y; j++)
-		{
-			cout << result_mat[i][j] << " ";
-		}
-		cout << endl;
-	}
-	**/
 }
