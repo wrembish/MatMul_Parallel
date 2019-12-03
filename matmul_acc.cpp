@@ -28,6 +28,7 @@ int main()
 	
 	// define the result matrix
 	int result_mat[MAT1_X][MAT2_Y];
+	int result_mat_new[MAT1_X][MAT2_Y];
 	
 	// zero result matrix
 	#pragma acc loop
@@ -62,8 +63,9 @@ int main()
 	// if the matrices can be multiplied, do it
 	if(MAT1_Y == MAT2_X)
 	{
-		#pragma omp parallel for ordered schedule(auto) collapse(3)
-		//#pragma omp target teams distribute parallel for schedule(auto) map(result_mat[0:MAT1_Y-1])
+		//#pragma omp parallel for ordered schedule(auto) collapse(3)
+		#pragma acc data copyin(result_mat[MAT1_X][MAT2_Y], result_mat_new[MAT1_X][MAT2_Y])
+		#pragma kernals
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
 			for(int unsigned j = 0; j < MAT2_Y; j++)
