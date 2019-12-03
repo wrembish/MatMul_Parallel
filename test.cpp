@@ -67,7 +67,9 @@ int main()
 	
 	// multiply the matrices
 	int unsigned i, j, k, x_loc, y_loc, total;
-	#pragma omp parallel for ordered schedule(auto) shared(result_mat) private(i, j, k, x_loc, y_loc, total)
+	//#pragma omp parallel for ordered schedule(auto) shared(result_mat) private(i, j, k, x_loc, y_loc, total)
+	#pragma acc data copyout(result_mat[0:MAT_SIZE*MAT_SIZE]) copyin(mat1[0:MAT_SIZE*MAT_SIZE], mat2[0:MAT_SIZE*MAT_SIZE])
+	#pragma kernels
 	for(i = 0; i < MAT_SIZE; i++)
 	{
 		x_loc = i * MAT_SIZE;
