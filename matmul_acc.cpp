@@ -71,7 +71,7 @@ int main()
 			#pragma acc loop gang, vector(8)
 			for(int unsigned j = 0; j < MAT2_Y; j++)
 			{
-				#pragma acc loop gang, vector(8)
+				#pragma acc loop seq
 				for(int unsigned k = 0; k < MAT1_Y; k++)
 				{
 					result_mat[i][j] += mat1[i][k] * mat2[k][j];
