@@ -68,7 +68,7 @@ int main()
 		#pragma kernals loop gang, vector(8)
 		for(int unsigned i = 0; i < MAT1_X; i++)
 		{
-			#pragma acc loop gang, vector(8)
+			#pragma acc loop
 			for(int unsigned j = 0; j < MAT2_Y; j++)
 			{
 				#pragma acc loop seq
